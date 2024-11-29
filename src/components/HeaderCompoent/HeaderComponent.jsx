@@ -15,6 +15,7 @@ import { useState } from 'react';
 import Loading from '../LoadingComponent/Loading';
 import { useEffect } from 'react';
 import { searchProduct } from '../../redux/slides/productSlide';
+import logo from '../../assets/images/logo-login.png'
 
 
 
@@ -88,10 +89,12 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
   }
 
   return (
-    <div style={{  heiht: '100%', width: '100%', display: 'flex',background: '#9255FD', justifyContent: 'center' }}>
+    <div style={{  heiht: '100%', width: '100%', display: 'flex',background: '#80C4E9', justifyContent: 'center' }}>
       <WrapperHeader style={{ justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset' }}>
         <Col span={5}>
-          <WrapperTextHeader to='/'>TLH Shop</WrapperTextHeader>
+          <WrapperTextHeader to='/'>
+          TLH Shop
+          </WrapperTextHeader>
         </Col>
         {!isHiddenSearch && (
           <Col span={11}>

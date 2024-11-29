@@ -94,7 +94,6 @@ const PaymentPage = () => {
   const handleAddOrder = () => {
     if(user?.access_token && order?.orderItemsSlected && user?.name
       && user?.address && user?.phone && user?.city && priceMemo && user?.id) {
-        // eslint-disable-next-line no-unused-expressions
         mutationAddOrder.mutate(
           { 
             token: user?.access_token, 
@@ -138,10 +137,31 @@ const PaymentPage = () => {
   )
 
   const {isLoading, data} = mutationUpdate
-  const {data: dataAdd,isLoading:isLoadingAddOrder, isSuccess, isError} = mutationAddOrder
+  const {data: dataAdd, isLoading:isLoadingAddOrder, isSuccess, isError} = mutationAddOrder
+
+  // useEffect(() => {
+  //   if (isSuccess && dataAdd?.status === 'OK') {
+  //     const arrayOrdered = []
+  //     order?.orderItemsSlected?.forEach(element => {
+  //       arrayOrdered.push(element.product)
+  //     });
+  //     dispatch(removeAllOrderProduct({listChecked: arrayOrdered}))
+  //     message.success('Đặt hàng thành công')
+  //     navigate('/orderSuccess', {
+  //       state: {
+  //         delivery,
+  //         payment,
+  //         orders: order?.orderItemsSlected,
+  //         totalPriceMemo: totalPriceMemo
+  //       }
+  //     })
+  //   } else if (isError) {
+  //     message.error("Đặt hàng thất bại")
+  //   }
+  // }, [isSuccess,isError])
 
   useEffect(() => {
-    if (isSuccess && dataAdd?.status === 'OK') {
+    if (isError) {
       const arrayOrdered = []
       order?.orderItemsSlected?.forEach(element => {
         arrayOrdered.push(element.product)
@@ -156,9 +176,7 @@ const PaymentPage = () => {
           totalPriceMemo: totalPriceMemo
         }
       })
-    } else if (isError) {
-      message.error("Đặt hàng thất bại")
-    }
+    } 
   }, [isSuccess,isError])
 
   const handleCancleUpdate = () => {
