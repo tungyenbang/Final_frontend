@@ -161,7 +161,7 @@ const PaymentPage = () => {
   // }, [isSuccess,isError])
 
   useEffect(() => {
-    if (isError) {
+    if (isSuccess) {
       const arrayOrdered = []
       order?.orderItemsSlected?.forEach(element => {
         arrayOrdered.push(element.product)
