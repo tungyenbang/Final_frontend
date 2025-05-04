@@ -2,8 +2,8 @@ import React from 'react'
 import SliderComponent from '../../components/SliderComponent/SliderComponent'
 import TypeProduct from '../../components/TypeProduct/TypeProduct'
 import { WrapperButtonMore, WrapperProducts, WrapperTypeProduct } from './style'
-import slider1 from '../../assets/images/slider1.webp'
-import slider2 from '../../assets/images/slider2.webp'
+import slider1 from '../../assets/images/1.avif'
+import slider2 from '../../assets/images/2.avif'
 import slider3 from '../../assets/images/slider3.webp'
 import CardComponent from '../../components/CardComponent/CardComponent'
 import { useQuery } from '@tanstack/react-query'
@@ -14,6 +14,8 @@ import Loading from '../../components/LoadingComponent/Loading'
 import { useDebounce } from '../../hooks/useDebounce'
 import { useEffect } from 'react'
 import { Session, Chatbox } from "@talkjs/react";
+import { useNavigate } from 'react-router-dom'
+import ChatWidget from '../../components/ChatWidget/ChatWidget';
 
 const HomePage = () => {
   const searchProduct = useSelector((state) => state?.product?.search)
@@ -21,6 +23,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false)
   const [limit, setLimit] = useState(6)
   const [typeProducts, setTypeProducts] = useState([])
+  // const navigate = useNavigate()
   
   const fetchProductAll = async (context) => {
     const limit = context?.queryKey && context?.queryKey[1]
@@ -92,6 +95,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+      <ChatWidget />
     </Loading>
   )
 }

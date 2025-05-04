@@ -101,3 +101,47 @@ export const initFacebookSDK = () => {
         return []
     }
   }
+
+  // export const convertProductDataChart = (orders) => {
+  //   const productCount = {};
+  
+  //   // Duyệt qua các đơn hàng để đếm số lượng sản phẩm theo category
+  //   orders?.forEach(order => {
+  //     order?.orderItems?.forEach(item => {
+  //       const category = item?.product?.type; // Lấy category của sản phẩm từ orderItem
+  //       console.log("category", category)
+  //       if (category) {
+  //         // Nếu chưa có category này trong productCount, tạo mới
+  //         if (!productCount[category]) {
+  //           productCount[category] = 0;
+  //         }
+  //         // Cộng thêm số lượng sản phẩm vào category tương ứng
+  //         productCount[category] += item.amount; // amount là số lượng của sản phẩm
+  //       }
+  //     });
+  //   });
+  
+  //   // Chuyển đổi object thành mảng kết quả cho PieChart
+  //   const results = Object.entries(productCount).map(([category, quantity]) => ({
+  //     name: category,  // Tên category
+  //     value: quantity, // Số lượng sản phẩm trong category đó
+  //   }));
+  
+  //   return results;
+  // };
+  
+  
+  export const convertProductDataChart = (orders) => {
+    const result = {};
+    orders?.forEach(order => {
+      order?.orderItems?.forEach(item => {
+        result[item.name] = (result[item.name] || 0) + item.amount;
+      });
+    });
+  
+    return Object.entries(result).map(([name, value]) => ({
+      name,
+      value
+    }));
+  };
+  

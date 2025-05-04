@@ -20,9 +20,9 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <GoogleOAuthProvider clientId={clientId} >
+           <GoogleOAuthProvider clientId={clientId} > 
           <App />
-          </GoogleOAuthProvider>
+           </GoogleOAuthProvider> 
         </PersistGate>
       </Provider>
       <ReactQueryDevtools initialIsOpen={false} />

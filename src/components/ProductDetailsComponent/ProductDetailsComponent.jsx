@@ -1,4 +1,5 @@
 import { Col, Image, Rate, Row } from 'antd'
+import { Modal } from 'antd';
 import React from 'react'
 import imageProductSmall from '../../assets/images/imagesmall.webp'
 import { WrapperStyleImageSmall, WrapperStyleColImage, WrapperStyleNameProduct, WrapperStyleTextSell, WrapperPriceProduct, WrapperPriceTextProduct, WrapperAddressProduct, WrapperQualityProduct, WrapperInputNumber, WrapperBtnQualityProduct } from './style'
@@ -78,17 +79,7 @@ const ProductDetailsComponent = ({idProduct}) => {
         if(!user?.id) {
             navigate('/sign-in', {state: location?.pathname})
         }else {
-            // {
-            //     name: { type: String, required: true },
-            //     amount: { type: Number, required: true },
-            //     image: { type: String, required: true },
-            //     price: { type: Number, required: true },
-            //     product: {
-            //         type: mongoose.Schema.Types.ObjectId,
-            //         ref: 'Product',
-            //         required: true,
-            //     },
-            // },
+            
             const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id)
             if((orderRedux?.amount + numProduct) <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
                 dispatch(addOrderProduct({
@@ -104,7 +95,18 @@ const ProductDetailsComponent = ({idProduct}) => {
                     userId: user?.id 
                     
                 }))
-                
+                Modal.confirm({
+                    title: 'Sản phẩm đã được thêm vào giỏ hàng',
+                    content: 'Bạn có muốn tới trang thanh toán luôn không?',
+                    okText: 'Có',
+                    cancelText: 'Không',
+                    onOk() {
+                        navigate('/order');
+                    },
+                    onCancel() {
+                        // không làm gì cả, chỉ đóng modal
+                    }
+                });
             } else {
                 setErrorLimitOrder(true)
             }

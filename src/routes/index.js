@@ -12,6 +12,7 @@ import ProfilePage from "../pages/Profile/ProfilePage";
 import SignInPage from "../pages/SignInPage/SignInPage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
 import TypeProductPage from "../pages/TypeProductPage/TypeProductPage";
+import ChatPage from '../pages/ChatPage/ChatPage'
 
 export const routes = [
     {
@@ -80,6 +81,11 @@ export const routes = [
         isShowHeader: false,
         isPrivated: true
     },
+    // {
+    //     path: '/chat',
+    //     page: ChatPage,
+    //     isShowHeader: true,
+    // },
     {
         path: '*',
         page: NotFoundPage

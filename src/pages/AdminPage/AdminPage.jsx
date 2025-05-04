@@ -9,7 +9,9 @@ import OrderAdmin from '../../components/OrderAdmin/OrderAmin';
 import * as OrderService from '../../services/OrderService'
 import * as ProductService from '../../services/ProductService'
 import * as UserService from '../../services/UserService'
-
+import { PieChart, Pie, Tooltip, Cell } from "recharts"; // Thư viện biểu đồ
+import { convertProductDataChart } from "../../utils"; // Đường dẫn tới hàm
+import ChatBubble from '../../components/ChatAdmin/ChatBubble';
 import CustomizedContent from './components/CustomizedContent';
 import { useSelector } from 'react-redux';
 import { useQueries } from '@tanstack/react-query';
@@ -18,6 +20,9 @@ import Loading from '../../components/LoadingComponent/Loading';
 
 const AdminPage = () => {
   const user = useSelector((state) => state?.user)
+  
+
+  
 
   const items = [
     getItem('Người dùng', 'users', <UserOutlined />),
@@ -114,8 +119,10 @@ const AdminPage = () => {
             )}
           </Loading>
           {renderPage(keySelected)}
+          <ChatBubble users={queries[1]?.data?.data || []} />
         </div>
       </div>
+      
     </>
   )
 }

@@ -16,6 +16,8 @@ import { DeleteOutlined, EditOutlined, SearchOutlined } from '@ant-design/icons'
 import { useSelector } from 'react-redux'
 import { orderContant } from '../../contant'
 import PieChartComponent from './PieChart'
+import Dashboard from './Dashboard'
+import BarChartComponent from './BarChart';
 
 const OrderAdmin = () => {
   const user = useSelector((state) => state?.user)
@@ -110,6 +112,7 @@ const OrderAdmin = () => {
       sorter: (a, b) => a.userName.length - b.userName.length,
       ...getColumnSearchProps('userName')
     },
+
     {
       title: 'Phone',
       dataIndex: 'phone',
@@ -141,6 +144,12 @@ const OrderAdmin = () => {
       ...getColumnSearchProps('paymentMethod')
     },
     {
+      title: 'Product name',
+      dataIndex: 'productNames',
+      sorter: (a, b) => a.productNames.length - b.productNames.length,
+      ...getColumnSearchProps('productNames')
+    },
+    {
       title: 'Total price',
       dataIndex: 'totalPrice',
       sorter: (a, b) => a.totalPrice.length - b.totalPrice.length,
@@ -149,16 +158,28 @@ const OrderAdmin = () => {
   ];
 
   const dataTable = orders?.data?.length && orders?.data?.map((order) => {
-    console.log('usewr', order)
-    return { ...order, key: order._id, userName: order?.shippingAddress?.fullName, phone: order?.shippingAddress?.phone, address: order?.shippingAddress?.address, paymentMethod: orderContant.payment[order?.paymentMethod],isPaid: order?.isPaid ? 'TRUE' :'FALSE',isDelivered: order?.isDelivered ? 'TRUE' : 'FALSE', totalPrice: convertPrice(order?.totalPrice)}
+     console.log('usewr', orders?.data)
+    const productNames = order?.orderItems?.map(item => item.name).join(', ');
+    return { ...order, key: order._id, userName: order?.shippingAddress?.fullName, phone: order?.shippingAddress?.phone, address: order?.shippingAddress?.address, paymentMethod: orderContant.payment[order?.paymentMethod],isPaid: order?.isPaid ? 'TRUE' :'FALSE',isDelivered: order?.isDelivered ? 'TRUE' : 'FALSE', productNames: productNames, totalPrice: convertPrice(order?.totalPrice)}
   })
+
+  
 
   return (
     <div>
       <WrapperHeader>Quản lý đơn hàng</WrapperHeader>
-      <div style={{height: 200, width:200}}>
-        <PieChartComponent data={orders?.data} />
-      </div>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+    <div style={{ height: 300, width: 200 }}>
+      <PieChartComponent data={orders?.data} />
+    </div>
+    <div style={{ height: 400, width: 900 }}>
+      <BarChartComponent data={orders?.data} />
+    </div>
+  </div>
+      {/* <div style={{ height: 200, width: 200, marginTop: '20px' }}>
+    <h3>Phân loại sản phẩm</h3>
+      <Dashboard data={orders?.data} type="productCategory" />
+    </div> */}
       <div style={{ marginTop: '20px' }}>
         <TableComponent  columns={columns} isLoading={isLoadingOrders} data={dataTable} />
       </div>
